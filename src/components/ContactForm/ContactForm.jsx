@@ -1,12 +1,13 @@
 import { FormContainer, Button, FormTitle } from './ContactForm.styled';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
-import { addContact, getContacts } from 'redux/contactsSlice';
+import { addContact } from 'redux/operations';
+import { selectContacts } from 'redux/selectors';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
-  const contacts = useSelector(getContacts);
+  const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
 
   const handleChangeName = evt => {
@@ -23,7 +24,7 @@ const ContactForm = () => {
       window.alert(`Контакт ${name} вже є в списку`);
       return;
     }
-    dispatch(addContact(name, number));
+    dispatch(addContact({ name, number }));
     reset();
   };
 

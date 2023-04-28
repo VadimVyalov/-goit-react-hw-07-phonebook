@@ -4,18 +4,15 @@ import {
   ListTitle,
 } from './ContactList.styled';
 import { useSelector, useDispatch } from 'react-redux';
-import { getFilter } from 'redux/filterSlice';
-import { deleteContact, getContacts } from 'redux/contactsSlice';
+
+import { deleteContact } from 'redux/operations';
+import { selectfiltredContact } from 'redux/selectors';
 
 const ContactList = () => {
-  const dispatch = useDispatch();
   const handleDelete = id => dispatch(deleteContact(id));
-  const contacts = useSelector(getContacts);
-  const filter = useSelector(getFilter);
+  const dispatch = useDispatch();
 
-  const filtredContacts = Array.isArray(contacts)
-    ? contacts.filter(contact => contact.name.toLowerCase().includes(filter))
-    : [];
+  const filtredContacts = useSelector(selectfiltredContact);
 
   return filtredContacts.length ? (
     <ContactListContainer>
@@ -23,10 +20,13 @@ const ContactList = () => {
       <ul>
         {filtredContacts.map(({ id, name, number }) => (
           <ContactItem key={id}>
-            {name}: <span>{number}</span>
-            <button type="button" onClick={() => handleDelete(id)}>
-              delete
-            </button>
+            {name}:{' '}
+            <span>
+              {number}
+              <button type="button" onClick={() => handleDelete(id)}>
+                delete
+              </button>
+            </span>
           </ContactItem>
         ))}
       </ul>

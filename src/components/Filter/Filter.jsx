@@ -1,8 +1,9 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { FilterContainer } from './Filter.styled';
-import { setFilter, getFilter } from 'redux/filterSlice';
+import { setFilter } from 'redux/filterSlice';
+import { selectFilter } from 'redux/selectors';
 const Filter = () => {
-  const filter = useSelector(getFilter);
+  const filter = useSelector(selectFilter);
   const dispatch = useDispatch();
   const onChange = evt => {
     dispatch(setFilter(evt.target.value.toLowerCase()));

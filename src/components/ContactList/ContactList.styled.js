@@ -4,6 +4,7 @@ export const ContactListContainer = styled.div`
   display: flex;
   flex-direction: column;
   font-size: 16px;
+  width: 400px;
 
   span {
     margin-bottom: 5px;
@@ -23,10 +24,12 @@ export const ContactItem = styled.li`
   display: flex;
   align-items: center;
   justify-content: space-between;
-  gap: 10px;
+  //gap: 10px;
   font-size: 15px;
   span {
     font-size: 20px;
+    text-align: end;
+    margin-right: 20px;
   }
   button {
     cursor: pointer;
@@ -35,6 +38,7 @@ export const ContactItem = styled.li`
     padding: 3px;
     border: 1px solid #a0a0a0;
     border-radius: 4px;
+    margin-left: 20px;
     background-color: #c0c0c0;
     transition: transform 250ms ease-in-out;
     :hover {
