@@ -23,32 +23,26 @@ const contactsSlice = createSlice({
       isLoading: false,
       error: null,
     },
-    filter: '',
   },
 
-  extraReducers: {
-    [fetchContacts.pending]: handlePending,
-    [fetchContacts.fulfilled](state, { payload }) {
-      handleFulfilled(state);
-      state.contacts = payload;
-    },
-    [fetchContacts.rejected]: handleRejected,
-    [addContact.pending]: handlePending,
-    [addContact.fulfilled](state, { payload }) {
-      handleFulfilled(state);
-      state.contacts.push(payload);
-    },
-
-    [addContact.rejected]: handleRejected,
-    [deleteContact.pending]: handlePending,
-    [deleteContact.fulfilled](state, { payload }) {
-      handleFulfilled(state);
-
-      state.contacts = state.contacts.filter(
-        contact => contact.id !== payload.id
-      );
-    },
-    [deleteContact.rejected]: handleRejected,
+  extraReducers: builder => {
+    builder
+      .addCase(fetchContacts.fulfilled, (state, { payload }) => {
+        handleFulfilled(state);
+        state.contacts = payload;
+      })
+      .addCase(addContact.fulfilled, (state, { payload }) => {
+        handleFulfilled(state);
+        state.contacts.push(payload);
+      })
+      .addCase(deleteContact.fulfilled, (state, { payload }) => {
+        handleFulfilled(state);
+        state.contacts = state.contacts.filter(
+          contact => contact.id !== payload.id
+        );
+      })
+      .addMatcher(action => action.type.endsWith('/pending'), handlePending)
+      .addMatcher(action => action.type.endsWith('/rejected'), handleRejected);
   },
 });
 
