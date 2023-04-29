@@ -2,13 +2,15 @@ import { FormContainer, Button, FormTitle } from './ContactForm.styled';
 import { useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { addContact } from 'redux/operations';
-import { selectContacts } from 'redux/selectors';
+import { selectContacts, selectResult } from 'redux/selectors';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const contacts = useSelector(selectContacts);
   const dispatch = useDispatch();
+
+  const contactsApi = useSelector(selectResult);
 
   const handleChangeName = evt => {
     setName(evt.target.value);
@@ -32,7 +34,7 @@ const ContactForm = () => {
     setName('');
     setNumber('');
   };
-
+  console.log(contactsApi);
   return (
     <FormContainer>
       <FormTitle>Телефонна книга</FormTitle>

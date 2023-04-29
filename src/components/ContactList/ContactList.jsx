@@ -7,13 +7,15 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import { deleteContact } from 'redux/operations';
 import { selectfiltredContact } from 'redux/selectors';
+import { useGetContactsQuery } from 'redux/rtk';
 
 const ContactList = () => {
-  const handleDelete = id => dispatch(deleteContact(id));
   const dispatch = useDispatch();
+  const handleDelete = id => dispatch(deleteContact(id));
 
-  const filtredContacts = useSelector(selectfiltredContact);
+  // const filtredContacts = useSelector(selectfiltredContact);
 
+  const { data: filtredContacts } = useGetContactsQuery();
   return filtredContacts.length ? (
     <ContactListContainer>
       <ListTitle>Контакти</ListTitle>
