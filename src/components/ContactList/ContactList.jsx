@@ -1,35 +1,16 @@
-import {
-  ContactListContainer,
-  ContactItem,
-  ListTitle,
-} from './ContactList.styled';
-import { useSelector, useDispatch } from 'react-redux';
-
-import { deleteContact } from 'redux/operations';
+import { ContactListContainer, ListTitle } from './ContactList.styled';
+import { useSelector } from 'react-redux';
 import { selectfiltredContact } from 'redux/selectors';
-import { useGetContactsQuery } from 'redux/rtk';
+import { ListItem } from 'components/ContactListItem/ContactListItem';
 
 const ContactList = () => {
-  const dispatch = useDispatch();
-  const handleDelete = id => dispatch(deleteContact(id));
-
-  // const filtredContacts = useSelector(selectfiltredContact);
-
-  const { data: filtredContacts } = useGetContactsQuery();
+  const filtredContacts = useSelector(selectfiltredContact);
   return filtredContacts.length ? (
     <ContactListContainer>
       <ListTitle>Контакти</ListTitle>
       <ul>
-        {filtredContacts.map(({ id, name, number }) => (
-          <ContactItem key={id}>
-            {name}:{' '}
-            <span>
-              {number}
-              <button type="button" onClick={() => handleDelete(id)}>
-                delete
-              </button>
-            </span>
-          </ContactItem>
+        {filtredContacts.map(contact => (
+          <ListItem key={contact.id} {...contact} />
         ))}
       </ul>
     </ContactListContainer>

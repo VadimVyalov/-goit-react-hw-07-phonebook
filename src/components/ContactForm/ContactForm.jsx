@@ -1,16 +1,19 @@
 import { FormContainer, Button, FormTitle } from './ContactForm.styled';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { addContact } from 'redux/operations';
+import { useSelector } from 'react-redux';
+//import { addContact } from 'redux/operations';
 import { selectContacts, selectResult } from 'redux/selectors';
+import { useAddContactMutation } from 'redux/contactsApi';
 
 const ContactForm = () => {
   const [name, setName] = useState('');
   const [number, setNumber] = useState('');
   const contacts = useSelector(selectContacts);
-  const dispatch = useDispatch();
-
   const contactsApi = useSelector(selectResult);
+  const [
+    addContact, // This is the mutation trigger
+    // { isLoading: isUpdating }, // This is the destructured mutation result
+  ] = useAddContactMutation();
 
   const handleChangeName = evt => {
     setName(evt.target.value);
@@ -26,7 +29,8 @@ const ContactForm = () => {
       window.alert(`Контакт ${name} вже є в списку`);
       return;
     }
-    dispatch(addContact({ name, number }));
+    // dispatch(addContact({ name, number }));
+    addContact({ name, number });
     reset();
   };
 
